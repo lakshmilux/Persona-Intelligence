@@ -4,7 +4,7 @@
 -Developed custom ML pipelines in **Azure** to automate the balancing of skewed features and unified the code of Persona creation with cohort modelling.
 
 **Outcome:** - Successfully **reduced bias by 23%**.
-- Achieved a 23% absolute reduction in bias, enabling market-realistic insights and a 23% lift in bias across distribution.
+- Achieved a 23% absolute reduction in bias, enabling market-realistic insights.
 
 # Data Directory
 - `raw/digital`: sample data related to digital profile
