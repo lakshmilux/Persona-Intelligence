@@ -1,9 +1,18 @@
+**Challenge:** Assigning Persona for each HCP and even addressed a **99% digital bias** in raw country-specialty data.
+
+**Solution:** - Implemented **Stacked Modeling** to assign Persona and **Cohort Modeling** to normalize skewed distributions.
+-Developed custom ML pipelines in **Azure** to automate the balancing of skewed features and unified the code of Persona creation with cohort modelling.
+
+**Outcome:** - Successfully **reduced bias by 23%**.
+- Achieved a 23% absolute reduction in bias, enabling market-realistic insights and a 23% lift in bias across distribution.
+
 # Data Directory
 - `raw/digital`: sample data related to digital profile
 - `raw/adoption`: sample data related to adoption profile
 - change the input file names if you need to run this project as per config filenames
 - `raw/processed`: processed data to shap analysis for digital,adoption,digital_cohort,adoption_cohort
-- for cohort - sampel data isnt provided 
+- for cohort - sampel data isnt provided
+  
 # Notebooks Directory
 
 This directory contains Jupyter notebooks for analysis and experimentation.
