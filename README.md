@@ -1,33 +1,17 @@
-Notebooks Directory
+# Notebooks Directory
+
 This directory contains Jupyter notebooks for analysis and experimentation.
 
-Structure
-adoption/: Notebooks related to adoption analysis use case
-digital/: Notebooks related to digital analysis use case
-Data Directory
-This directory contains all data files used in the project.
+## Structure
 
-Structure
-raw/: Contains original, immutable data files. Never modify files in this directory.
+- `adoption/`: Notebooks related to adoption analysis use case
+- `digital/`: Notebooks related to digital analysis use case
 
-Input data from various sources
-Original datasets before any processing
-Reference data
-processed/: Contains cleaned and transformed data ready for analysis
+## Best Practices
 
-Cleaned datasets
-Feature-engineered data
-Intermediate processing results
-Model-ready datasets
-Best Practices
-Always keep raw data immutable - never modify original files
-Document data sources and collection dates
-Use clear, descriptive filenames with dates where applicable
-Include data documentation (data dictionaries, schemas) alongside the data files
-For large files, consider adding them to .gitignore and storing them elsewhere
-Process Flow Overview
-``` ┌─────────────────────────────────────────────────────────────────┐ │ INITIALIZATION │ │ • Setup project paths │ │ • Load configuration (ModelConfig) │ │ • Set random seeds for reproducibility │ └──────────────────────┬──────────────────────────────────────────┘ │ ▼ ┌─────────────────────────────────────────────────────────────────┐ │ DATA LOADING & SPLITTING │ │ • Load main dataset and SHAP feature importance │ │ • Organize features by importance │ │ • Split into train/test (80/20) with stratification │ │ • Identify numerical vs categorical columns │ └──────────────────────┬──────────────────────────────────────────┘ │ ▼ ┌─────────────────────────────────────────────────────────────────┐ │ HYPERPARAMETER OPTIMIZATION (Optuna) │ │ • Create OptunaObjectiveEnhanced │ │ • Run N trials (default: 20) │ │ • For each trial: │ │ - Sample features (5 to all features) │ │ - Sample model(s): LGBM, BRF, CatBoost │ │ - Sample hyperparameters for selected model(s) │ │ - Evaluate using nested 5-fold CV │ │ * 5 outer folds for evaluation │ │ * 5 inner folds for stacking OOF predictions │ │ - Calculate custom log loss │ │ • Select best hyperparameters and features │ └──────────────────────┬──────────────────────────────────────────┘ │ ▼ ┌─────────────────────────────────────────────────────────────────┐ │ FINAL MODEL TRAINING │ │ • Convert data for weighted training │ │ • Build final model with best hyperparameters: │ │ - Single CatBoost → build_final_catboost_softweights_model │ │ - Other models → build_final_model (StackingClassifier) │ │ • Train on full training set │ │ • Save model (cloudpickle) │ └──────────────────────┬──────────────────────────────────────────┘ │ ▼ ┌─────────────────────────────────────────────────────────────────┐ │ EVALUATION & PREDICTIONS │ │ • Predict on training set → Calculate train metrics │ │ • Predict on test set → Calculate test metrics │ │ • Predict on OK data → Generate OK predictions │ │ • Save all results to Excel │ └─────────────────────────────────────────────────────────────────┘
-
-Notebook Structure
-├── data/ ├── raw/ # Raw data of HCP and OK for both Digital and adoption Profiles
-│ ├── processed/ # Processed data from SHAP of HCP Inference and OK for both Digital and adoption Profiles ├── notebooks/ │ ├── digital/ # Digital models (using unified script for both HCP inference and COHORT Models) │ ├── adoption/ # Adoption models (using unified script both HCP inference and COHORT Models) │ └── README.md ├── src/ │ ├── common/ # CORE UNIFIED LOGIC │ │ ├── config.py # ModelConfig class (Object Wrapper) │ │ ├── data_preprocessing.py │ │ ├── optuna_enhanced.py │ │ ├── metrics.py │ │ └── pipeline_factory_enhanced.py │ │ ├── ok_predicitons.py │ │ ├── model_factory_enhanced.py │ │ ├── utils.py │ │ └── stratification_tools.py │ │ │ ├── digital/ # Model-specific configurations │ └── adoption/ # Model-specific configurations │ └── digital_cohort/ # Model-specific configurations │ └── adoption_cohort/ # Model-specific configurations └── requirements.txt └── Outputs ├── digital/ # Digital Profile output files for Inference ├── adoption/ # Adoption Profile output files for Inference ├── digital_cohort/ # Digital Profile output files for Cohort ├── adoption_cohort/ # Adoption Profile output files for Cohort
+1. Use clear, descriptive notebook names
+2. Include date in notebook names for version tracking
+3. Keep notebooks well-documented with markdown cells
+4. Move reusable code to proper modules in `src/`
+5. Clean notebook outputs before committing
+6. Consider using notebook templates for consistency
